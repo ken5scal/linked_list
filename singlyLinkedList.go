@@ -1,6 +1,9 @@
 package linkedList
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 type SinglyLinkedList struct {
 	head, tail *Node
@@ -48,30 +51,38 @@ func (list *SinglyLinkedList) Delete(name string) {
 		list.tail = nil
 	} else if node2del == list.head { // deleting first node
 		list.head = node2del.Next()
-	} else { // deleting next one(even if the last node)
+	} else {
 		previous_node := list.First()
-		for previous_node != node2del {
-			previous_node = previous_node.Next()
+		for node := list.First(); node != node2del; node = node.Next() {
+			previous_node = node
 		}
 		list.tail = previous_node
 		list.tail.next = nil
 	}
+	// deleting next one(even if the last node)
 	fmt.Printf("Removed: %v\n", name)
 }
 
 // Pop last item from list
 func (list *SinglyLinkedList) Pop() (p Person, err error) {
+	var errEmpty = errors.New("Error - List is empty")
+
 	if list.tail == nil {
-		fmt.Println("There is nothing to pop")
+		err = errEmpty
+	} else if list.tail == list.head {
+		list.head = nil
+		list.tail = nil
 		err = errEmpty
 	} else {
 		previous_node := list.First()
 		for previous_node != list.tail {
 			previous_node = previous_node.Next()
 		}
+		p = previous_node.Person
+
 		list.tail = previous_node
 		list.tail.next = nil
-		p = list.tail.Person
 	}
+
 	return p, err
 }
