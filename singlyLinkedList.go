@@ -56,8 +56,14 @@ func (list *SinglyLinkedList) Delete(name string) {
 		for node := list.First(); node != node2del; node = node.Next() {
 			previous_node = node
 		}
-		list.tail = previous_node
-		list.tail.next = nil
+		if node2del == list.tail {
+			fmt.Println("Deleting tail")
+			list.tail = previous_node
+			list.tail.next = nil
+		} else {
+			fmt.Println("Deleting non tail")
+			previous_node.next = node2del.Next()
+		}
 	}
 	// deleting next one(even if the last node)
 	fmt.Printf("Removed: %v\n", name)
@@ -70,15 +76,15 @@ func (list *SinglyLinkedList) Pop() (p Person, err error) {
 	if list.tail == nil {
 		err = errEmpty
 	} else if list.tail == list.head {
+		p = list.head.Person
 		list.head = nil
 		list.tail = nil
-		err = errEmpty
 	} else {
 		previous_node := list.First()
-		for previous_node != list.tail {
-			previous_node = previous_node.Next()
+		for node := list.First(); node != list.tail; node = node.Next() {
+			previous_node = node
 		}
-		p = previous_node.Person
+		p = previous_node.next.Person
 
 		list.tail = previous_node
 		list.tail.next = nil
