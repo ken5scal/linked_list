@@ -41,6 +41,7 @@ func (list *SinglyLinkedList) Find(name string) *Node {
 func (list *SinglyLinkedList) Delete(name string) {
 	node2del := list.Find(name)
 	if node2del == nil { // There is no such name
+		fmt.Println("There is nothing to Delete")
 		return
 	} else if node2del == list.head && node2del == list.tail { // when there is single one node
 		list.head = nil
@@ -61,6 +62,7 @@ func (list *SinglyLinkedList) Delete(name string) {
 // Pop last item from list
 func (list *SinglyLinkedList) Pop() (p Person, err error) {
 	if list.tail == nil {
+		fmt.Println("There is nothing to pop")
 		err = errEmpty
 	} else {
 		previous_node := list.First()
