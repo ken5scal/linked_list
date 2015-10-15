@@ -28,11 +28,13 @@ func (list *SinglyLinkedList) Find(name string) *Node {
 	for n := list.First(); n != nil; n = n.Next() {
 		if n.Person.Name == name {
 			result = n
-			fmt.Println("Found : %v\n", name)
-			return result
+			fmt.Printf("Found : %v\n", name)
 		}
 	}
-	return nil
+	if result == nil {
+		fmt.Printf("Not FOund : %v\n", name)
+	}
+	return result
 }
 
 // Delete node
@@ -53,7 +55,7 @@ func (list *SinglyLinkedList) Delete(name string) {
 		list.tail = previous_node
 		list.tail.next = nil
 	}
-
+	fmt.Printf("Removed: %v\n", name)
 }
 
 // Pop last item from list
