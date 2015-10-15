@@ -15,11 +15,11 @@ type Node struct {
 	next, prev *Node
 }
 
-type doublyLinkedList struct {
+type DoublyLinkedList struct {
 	head, tail *Node
 }
 
-func (l *doublyLinkedList) First() *Node {
+func (l *DoublyLinkedList) First() *Node {
 	return l.head
 }
 
@@ -32,7 +32,7 @@ func (n *Node) Prev() *Node {
 }
 
 // Append Node
-func (l *doublyLinkedList) Push(p Person) *doublyLinkedList {
+func (l *DoublyLinkedList) Push(p Person) *DoublyLinkedList {
 	n := &Node{Person: p}
 	if l.head == nil { // First Node
 		l.head = n
@@ -45,7 +45,7 @@ func (l *doublyLinkedList) Push(p Person) *doublyLinkedList {
 }
 
 // Find Node
-func (l *doublyLinkedList) Find(name string) *Node {
+func (l *DoublyLinkedList) Find(name string) *Node {
 	found := false
 	var result *Node = nil
 	for n := l.First(); n != nil && !found; n = n.Next() {
@@ -61,7 +61,7 @@ func (l *doublyLinkedList) Find(name string) *Node {
 }
 
 // Delete Node
-func (l *doublyLinkedList) Delete(name string) bool {
+func (l *DoublyLinkedList) Delete(name string) bool {
 	success := false
 	node2del := l.Find(name)
 	if node2del != nil {
@@ -92,7 +92,7 @@ func (l *doublyLinkedList) Delete(name string) bool {
 var errEmpty = errors.New("Error - List is empty")
 
 // Pop last item from list
-func (l *doublyLinkedList) Pop() (p Person, err error) {
+func (l *DoublyLinkedList) Pop() (p Person, err error) {
 	if l.tail == nil {
 		err = errEmpty
 	} else {

@@ -1,15 +1,15 @@
 package linkedList
 
-type singlyLinkedList struct {
+type SinglyLinkedList struct {
 	head, tail *Node
 }
 
-func (list *singlyLinkedList) First() *Node {
+func (list *SinglyLinkedList) First() *Node {
 	return list.head
 }
 
 // Append node
-func (list *singlyLinkedList) Push(p Person) *singlyLinkedList {
+func (list *SinglyLinkedList) Push(p Person) *SinglyLinkedList {
 	node := &Node{Person: p}
 	if list.head == nil {
 		list.head = node
@@ -21,7 +21,7 @@ func (list *singlyLinkedList) Push(p Person) *singlyLinkedList {
 }
 
 // Find node
-func (list *singlyLinkedList) Find(name string) *Node {
+func (list *SinglyLinkedList) Find(name string) *Node {
 	var result *Node = nil
 	for n := list.First(); n != nil; n = n.Next() {
 		if n.Person.Name == name {
