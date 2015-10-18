@@ -95,6 +95,8 @@ func (list *SinglyLinkedList) Pop() (p Person, err error) {
 
 func (list *SinglyLinkedList) Reverse() {
 	currentNode := list.First()
+	origHead := list.First()
+	origTail := list.tail
 	var previousNode *Node = nil
 	for {
 		if currentNode == nil {
@@ -106,6 +108,6 @@ func (list *SinglyLinkedList) Reverse() {
 		currentNode = temp
 	}
 
-	list.tail = list.tail
-	list.head = previousNode
+	list.tail = origHead
+	list.head = origTail
 }
