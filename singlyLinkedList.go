@@ -31,11 +31,11 @@ func (list *SinglyLinkedList) Find(name string) *Node {
 	for n := list.First(); n != nil; n = n.Next() {
 		if n.Person.Name == name {
 			result = n
-			fmt.Printf("Found : %v\n", name)
+			fmt.Printf("Found : %v菫ハ", name)
 		}
 	}
 	if result == nil {
-		fmt.Printf("Not FOund : %v\n", name)
+		fmt.Printf("Not FOund : %v菫ハ", name)
 	}
 	return result
 }
@@ -66,7 +66,7 @@ func (list *SinglyLinkedList) Delete(name string) {
 		}
 	}
 	// deleting next one(even if the last node)
-	fmt.Printf("Removed: %v\n", name)
+	fmt.Printf("Removed: %v菫ハ", name)
 }
 
 // Pop last item from list
@@ -91,4 +91,21 @@ func (list *SinglyLinkedList) Pop() (p Person, err error) {
 	}
 
 	return p, err
+}
+
+func (list *SinglyLinkedList) Reverse() {
+	currentNode := list.First()
+	var previousNode *Node = nil
+	for {
+		if currentNode == nil {
+			break
+		}
+		temp := currentNode.next
+		currentNode.next = previousNode
+		previousNode = currentNode
+		currentNode = temp
+	}
+
+	list.tail = list.tail
+	list.head = previousNode
 }
