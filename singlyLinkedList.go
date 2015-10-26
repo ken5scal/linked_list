@@ -107,16 +107,20 @@ func (list *SinglyLinkedList) Reverse() {
 }
 
 func (list *SinglyLinkedList) RemoveDuplicates() {
-	nameExistMap := make(map[string]bool)
 	currentNode := list.First()
-	var previousNode *Node = nil
+	var previousNode *Node = nil //非初期化(nil)の値は全型に対して共通の値なので、previousNode := nilだとNg
 
-	for currentNode != nil {
+	nameExistMap := make(map[string]bool)
+
+	for currentNode != nil { // tempを使わなくてもfor n:= list.First(); n!=nil; n = n.Next()でもいける
+		temp := currentNode.next
 		if _, ok := nameExistMap[currentNode.Name]; ok {
+			//if nameExistMap[currentNode.Name] { // でもいける
 			previousNode.next = currentNode.Next()
 		} else {
 			nameExistMap[currentNode.Name] = true
 			previousNode = currentNode
 		}
+		currentNode = temp
 	}
 }
