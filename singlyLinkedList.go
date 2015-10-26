@@ -14,7 +14,7 @@ func (list *SinglyLinkedList) First() *Node {
 }
 
 // Append node
-func (list *SinglyLinkedList) Push(p Person) *SinglyLinkedList {
+func (list *SinglyLinkedList) Push(p Person) {
 	node := &Node{Person: p}
 	if list.head == nil {
 		list.head = node
@@ -22,7 +22,6 @@ func (list *SinglyLinkedList) Push(p Person) *SinglyLinkedList {
 		list.tail.next = node
 	}
 	list.tail = node
-	return list
 }
 
 // Find node
@@ -95,19 +94,29 @@ func (list *SinglyLinkedList) Pop() (p Person, err error) {
 
 func (list *SinglyLinkedList) Reverse() {
 	currentNode := list.First()
-	origHead := list.First()
-	origTail := list.tail
+	list.head = list.tail
+	list.tail = currentNode
+
 	var previousNode *Node = nil
-	for {
-		if currentNode == nil {
-			break
-		}
+	for currentNode != nil {
 		temp := currentNode.next
 		currentNode.next = previousNode
 		previousNode = currentNode
 		currentNode = temp
 	}
+}
 
-	list.tail = origHead
-	list.head = origTail
+func (list *SinglyLinkedList) RemoveDuplicates() {
+	nameExistMap := make(map[string]bool)
+	currentNode := list.First()
+	var previousNode *Node = nil
+
+	for currentNode != nil {
+		if _, ok := nameExistMap[currentNode.Name]; ok {
+			previousNode.next = currentNode.Next()
+		} else {
+			nameExistMap[currentNode.Name] = true
+			previousNode = currentNode
+		}
+	}
 }
