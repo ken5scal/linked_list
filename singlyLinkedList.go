@@ -124,3 +124,21 @@ func (list *SinglyLinkedList) RemoveDuplicates() {
 		currentNode = temp
 	}
 }
+
+func (list *SinglyLinkedList) findInReverseOrder(idx int) *Node {
+	node1 := list.First()
+	node2 := list.First()
+
+	for i := 0; i < idx; i++ {
+		if node2 == nil {
+			return nil
+		}
+		node2 = node2.Next()
+	}
+
+	for node2.Next() != nil {
+		node1 = node1.Next()
+		node2 = node2.Next()
+	}
+	return node1
+}
