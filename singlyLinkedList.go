@@ -30,11 +30,11 @@ func (list *SinglyLinkedList) Find(name string) *Node {
 	for n := list.First(); n != nil; n = n.Next() {
 		if n.Person.Name == name {
 			result = n
-			fmt.Printf("Found : %v菫ハ", name)
+			fmt.Printf("Found : %v\n", name)
 		}
 	}
 	if result == nil {
-		fmt.Printf("Not FOund : %v菫ハ", name)
+		fmt.Printf("Not FOund : %v\n", name)
 	}
 	return result
 }
@@ -125,7 +125,7 @@ func (list *SinglyLinkedList) RemoveDuplicates() {
 	}
 }
 
-func (list *SinglyLinkedList) findInReverseOrder(idx int) *Node {
+func (list *SinglyLinkedList) FindInReverseOrder(idx int) *Node {
 	node1 := list.First()
 	node2 := list.First()
 
@@ -141,4 +141,13 @@ func (list *SinglyLinkedList) findInReverseOrder(idx int) *Node {
 		node2 = node2.Next()
 	}
 	return node1
+}
+
+func (list *SinglyLinkedList) DeleteNonHeadNode(node *Node) {
+	if node == nil || node.Next() == nil {
+		// この場合、最終nodeは削除できない
+		return
+	}
+	node.Person = node.Next().Person
+	node.next = node.Next().Next()
 }
