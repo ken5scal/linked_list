@@ -151,3 +151,46 @@ func (list *SinglyLinkedList) DeleteNonHeadNode(node *Node) {
 	node.Person = node.Next().Person
 	node.next = node.Next().Next()
 }
+
+func (list *SinglyLinkedList) insertNodeAndSortList(x string) *SinglyLinkedList {
+	beforeList := new(SinglyLinkedList)
+	afterList := new(SinglyLinkedList)
+
+	currentNode := list.First()
+
+	// listの分割
+	for currentNode != nil {
+		next := currentNode.Next()
+		currentNode.next = nil
+
+		if currentNode.Name < x {
+			// 前半のリストの最後にnodeを挿入
+			if beforeList.head == nil {
+				beforeList.head = currentNode
+				beforeList.tail = beforeList.First()
+			} else {
+				beforeList.tail.next = currentNode
+				beforeList.tail = currentNode
+			}
+		} else {
+			// 後半のリストの最後にnodeを挿入
+			if afterList.head == nil {
+				afterList.head = currentNode
+				afterList.tail = afterList.First()
+
+			} else {
+				afterList.tail.next = currentNode
+				afterList.tail = currentNode
+			}
+		}
+		currentNode = next
+	}
+
+	if beforeList == nil {
+		return afterList
+	}
+
+	// beforeListとafterListをマージ
+	beforeList.tail.next = afterList.head
+	return beforeList
+}
