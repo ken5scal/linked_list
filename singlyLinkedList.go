@@ -9,6 +9,15 @@ type SinglyLinkedList struct {
 	head, tail *Node
 }
 
+type SinglyLinkedListNumber struct {
+	head, tail *NumNode
+}
+
+type NumNode struct {
+	value int
+	next  *NumNode
+}
+
 func (list *SinglyLinkedList) First() *Node {
 	return list.head
 }
@@ -193,4 +202,38 @@ func (list *SinglyLinkedList) insertNodeAndSortList(x string) *SinglyLinkedList 
 	// beforeListとafterListをマージ
 	beforeList.tail.next = afterList.head
 	return beforeList
+}
+
+func addNumList(l1 SinglyLinkedListNumber, l2 SinglyLinkedListNumber) *SinglyLinkedListNumber {
+	list := new(SinglyLinkedListNumber)
+	node1 := l1.head
+	node2 := l2.head
+	val := 0
+	var node *NumNode = nil
+
+	for &node1 != nil || &node2 != nil {
+		if &node1.value != nil {
+			val += node1.value
+		}
+		if &node2.value != nil {
+			val += node2.value
+		}
+
+		node.value = val % 10
+		node.next = nil
+
+		if list.head == nil {
+			list.head = node
+		} else {
+			list.tail.next = node
+			list.tail = list.tail.next
+		}
+
+		node1 = node1.next
+		node2 = node2.next
+		val /= val
+
+	}
+
+	return list
 }
