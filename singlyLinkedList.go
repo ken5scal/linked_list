@@ -14,11 +14,16 @@ type SinglyLinkedListNumber struct {
 }
 
 type NumNode struct {
-	value int
-	next  *NumNode
+	Value int
+	Next  *NumNode
 }
 
+// Retrieve first node
 func (list *SinglyLinkedList) First() *Node {
+	return list.head
+}
+
+func (list *SinglyLinkedListNumber) First() *NumNode {
 	return list.head
 }
 
@@ -29,6 +34,16 @@ func (list *SinglyLinkedList) Push(p Person) {
 		list.head = node
 	} else {
 		list.tail.next = node
+	}
+	list.tail = node
+}
+
+func (list *SinglyLinkedListNumber) PushNumber(value int) {
+	node := &NumNode{Value: value}
+	if list.head == nil {
+		list.head = node
+	} else {
+		list.tail.Next = node
 	}
 	list.tail = node
 }
@@ -204,35 +219,35 @@ func (list *SinglyLinkedList) insertNodeAndSortList(x string) *SinglyLinkedList 
 	return beforeList
 }
 
-func addNumList(l1 SinglyLinkedListNumber, l2 SinglyLinkedListNumber) *SinglyLinkedListNumber {
+func AddNumList(l1 *SinglyLinkedListNumber, l2 *SinglyLinkedListNumber) *SinglyLinkedListNumber {
 	list := new(SinglyLinkedListNumber)
 	node1 := l1.head
 	node2 := l2.head
 	val := 0
-	var node *NumNode = nil
 
-	for &node1 != nil || &node2 != nil {
-		if &node1.value != nil {
-			val += node1.value
+	for node1 != nil || node2 != nil {
+		if node1 != nil {
+			val += node1.Value
 		}
-		if &node2.value != nil {
-			val += node2.value
+		if node2 != nil {
+			val += node2.Value
 		}
 
-		node.value = val % 10
-		node.next = nil
+		node := &NumNode{Value: val}
+		node.Value = val % 10
+		fmt.Println(val)
 
 		if list.head == nil {
 			list.head = node
+			list.tail = node
 		} else {
-			list.tail.next = node
-			list.tail = list.tail.next
+			list.tail.Next = node
+			list.tail = list.tail.Next
 		}
 
-		node1 = node1.next
-		node2 = node2.next
-		val /= val
-
+		node1 = node1.Next
+		node2 = node2.Next
+		val /= 10
 	}
 
 	return list
