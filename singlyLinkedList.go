@@ -252,3 +252,11 @@ func AddNumList(l1 *SinglyLinkedListNumber, l2 *SinglyLinkedListNumber) *SinglyL
 
 	return list
 }
+
+func (list *SinglyLinkedList) FirstRepeatedNode() {
+	hasNodeShown := make(map[*Node]bool)
+	currentNode := list.First()
+	for currentNode != nil {
+		hasNodeShown[currentNode] = true
+	}
+}
