@@ -253,10 +253,20 @@ func AddNumList(l1 *SinglyLinkedListNumber, l2 *SinglyLinkedListNumber) *SinglyL
 	return list
 }
 
-func (list *SinglyLinkedList) FirstRepeatedNode() {
+func (list *SinglyLinkedList) FirstRepeatedNode() string {
 	hasNodeShown := make(map[*Node]bool)
 	currentNode := list.First()
 	for currentNode != nil {
-		hasNodeShown[currentNode] = true
+		temp := currentNode.next
+
+		if hasNodeShown[currentNode] {
+			// _, ok := nameExistMap[currentNode]; okでもよし
+			return currentNode.Name
+		} else {
+			hasNodeShown[currentNode] = true
+		}
+
+		currentNode = temp
 	}
+	return "No Duplicated Node Found"
 }
