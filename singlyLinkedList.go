@@ -18,6 +18,30 @@ type NumNode struct {
 	Next  *NumNode
 }
 
+type Stack struct {
+	people []*Person
+	count  int
+}
+
+func (s *Stack) Push(n *Person) {
+	if s.count >= len(s.people) {
+		people := make([]*Person, len(s.people)*2)
+		copy(people, s.people)
+		s.people = people
+	}
+	s.people[s.count] = n
+	s.count++
+}
+
+func (s *Stack) Pop() *Node {
+	if s.count == 0 {
+		return nil
+	}
+	node := s.nodes[s.count-1]
+	s.count--
+	return node
+}
+
 // Retrieve first node
 func (list *SinglyLinkedList) First() *Node {
 	return list.head
@@ -226,15 +250,16 @@ func AddNumList(l1 *SinglyLinkedListNumber, l2 *SinglyLinkedListNumber) *SinglyL
 	val := 0
 
 	for node1 != nil || node2 != nil {
-		if node1 != nil {
+		if &node1.Value != nil {
 			val += node1.Value
 		}
-		if node2 != nil {
+		if &node2.Value != nil {
 			val += node2.Value
 		}
 
 		node := &NumNode{Value: val}
 		node.Value = val % 10
+		node.Next = nil
 		fmt.Println(val)
 
 		if list.head == nil {
@@ -251,22 +276,37 @@ func AddNumList(l1 *SinglyLinkedListNumber, l2 *SinglyLinkedListNumber) *SinglyL
 	}
 
 	return list
+
+	//	node := &NumNode{value: value}
+	//	if list.head == nil {
+	//		list.head = node
+	//	} else {
+	//		list.tail.next = node
+	//	}
+	//	list.tail = node
 }
 
-func (list *SinglyLinkedList) FirstRepeatedNode() string {
-	hasNodeShown := make(map[*Node]bool)
-	currentNode := list.First()
-	for currentNode != nil {
-		temp := currentNode.next
+func (singlyList *SinglyLinkedList) IsPalindrome() bool {
+	fast := singlyList.head
+	slow := singlyList.head
+	stack := new(Stack)
 
-		if hasNodeShown[currentNode] {
-			// _, ok := nameExistMap[currentNode]; okでもよし
-			return currentNode.Name
-		} else {
-			hasNodeShown[currentNode] = true
-		}
-
-		currentNode = temp
+	for fast != nil && fast.Next() != nil {
+		stack.Push(&fast.Person)
+		slow = slow.Next()
+		fast = fast.Next().Next()
 	}
-	return "No Duplicated Node Found"
+
+	if fast != nil {
+		slow = slow.Next()
+	}
+
+	for slow != nil {
+		top := stack.Pop()
+		if top.Person != slow.Person {
+			return false
+		}
+		slow = slow.Next()
+	}
+	return true
 }
